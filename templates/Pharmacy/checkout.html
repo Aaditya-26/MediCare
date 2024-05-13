@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>MediCare</title>
+	<!-- Favicons -->
+	<link type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\open-iconic-bootstrap.min.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\animate.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\owl.carousel.min.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\owl.theme.default.min.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\magnific-popup.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\owl.theme.default.min.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\aos.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\ionicons.min.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\bootstrap-datepicker.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\jquery.timepicker.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\flaticon.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\icomoon.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System\pharmacy_assets\css\style.css'%}">
+	
+	<link type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" />
+  	<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}" />
+  	<link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}" />
+ 	<link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}" />
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+		<div class="container">
+			<a style="margin-left: -250px;" class="navbar-brand" href="">MediCare<small> Medical Shop</small></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+			<div style="margin-right: -287px;" class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a href="{% url 'patient-dashboard' %}" class="nav-link">Dashboard</a></li>
+					<li class="nav-item"><a href="{% url 'pharmacy_shop' %}" class="nav-link">Shop</a></li>
+					<li class="nav-item cart">
+						<a href="{% url 'cart' %}" class="nav-link">
+							<span class="icon icon-shopping_cart"></span>
+							<span class="bag d-flex justify-content-center align-items-center">
+								<small>1</small>
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<section class="ftco-section">
+		<div class="container">
+			<div>
+				<div class="ftco-animate">
+					<form action="#" class="billing-form ftco-bg-dark p-3 p-md-5">
+						<h3 class="mb-4 billing-heading text-center"><b>Billing Details</b></h3>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="firstname"><i class="fas fa-user"></i> First Name <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" placeholder="Enter your first name" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="lastname"><i class="fas fa-user"></i> Last Name <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" placeholder="Enter your last name" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="country"><i class="fas fa-globe"></i> Country <span class="text-danger">*</span></label>
+									<select class="form-control" required>
+										<option value="">Select your country</option>
+										<option value="India">India</option>
+										<option value="France">France</option>
+										<option value="Italy">Italy</option>
+										<option value="Philippines">Philippines</option>
+										<option value="South Korea">South Korea</option>
+										<option value="Hong Kong">Hong Kong</option>
+										<option value="Japan">Japan</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="streetaddress"><i class="fas fa-map-marker-alt"></i> Street Address <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" placeholder="Enter your street address" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="apartment"><i class="fas fa-building"></i> Apartment / Suite</label>
+									<input type="text" class="form-control" placeholder="Enter apartment, suite, etc.">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="towncity"><i class="fas fa-city"></i> Town / City <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" placeholder="Enter your town or city" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="postcodezip"><i class="fas fa-map-marker-alt"></i> Postcode / ZIP <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" placeholder="Enter your postcode or ZIP" required>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="phone"><i class="fas fa-phone"></i> Phone</label>
+									<input type="text" class="form-control" placeholder="Enter your phone number">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="emailaddress"><i class="fas fa-envelope"></i> Email Address <span class="text-danger">*</span></label>
+									<input type="email" class="form-control" placeholder="Enter your email address" required>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group mt-4">
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="create-account" name="account-type" class="custom-control-input">
+										<label class="custom-control-label" for="create-account">Create an Account</label>
+									</div>
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="ship-different" name="account-type" class="custom-control-input">
+										<label class="custom-control-label" for="ship-different">Ship to Different Address</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					
+					<div class="row mt-5 pt-3 d-flex">
+						<div class="col-md-6 d-flex text-center">
+							<div class="cart-detail cart-total ftco-bg-dark p-3 p-md-4">
+								<div class="billing-heading mb-4">
+									<h3><b>Cart Total</b></h3>
+								</div>
+								<div class="cart-total">
+									<div class="item d-flex justify-content-between">
+										<span>Subtotal</span>
+										<span>20.60 ₹</span>
+									</div>
+									<div class="item d-flex justify-content-between">
+										<span>Delivery</span>
+										<span>10.00 ₹</span>
+									</div>
+									<div class="item d-flex justify-content-between">
+										<span>Discount</span>
+										<span>3.00 ₹</span>
+									</div>
+									<hr>
+									<div class="total-price d-flex justify-content-between">
+										<span>Total</span>
+										<span>17.60 ₹</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="cart-detail ftco-bg-dark p-3 p-md-4">
+								<h3 class="billing-heading mb-4 text-center"><b>Payment Method</b></h3>
+								<div class="payment-method">
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="custom-control custom-radio">
+												<input type="radio" id="bank-transfer" name="payment-method" class="custom-control-input">
+												<label class="custom-control-label" for="bank-transfer">Direct Bank Transfer</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="custom-control custom-radio">
+												<input type="radio" id="check-payment" name="payment-method" class="custom-control-input">
+												<label class="custom-control-label" for="check-payment">Check Payment</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="custom-control custom-radio">
+												<input type="radio" id="paypal" name="payment-method" class="custom-control-input">
+												<label class="custom-control-label" for="paypal">Paypal</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" id="terms-conditions" class="custom-control-input">
+												<label class="custom-control-label" for="terms-conditions">I have read and accept the terms and conditions</label>
+											</div>
+										</div>
+									</div>
+									<p class="text-center"><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="main-wrapper">
+		{% include 'footer.html' %}
+	</div>
+
+	<div id="ftco-loader" class="show fullscreen">
+		<svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+		</svg>
+	</div>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/popper.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery.easing.1.3.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/aos.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery.animateNumber.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/bootstrap-datepicker.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/jquery.timepicker.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/scrollax.min.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/google-map.js' %}"></script>
+	<script src="{% static 'HealthStack-System/pharmacy_assets/js/main.js' %}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&amp;sensor=false"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'UA-23581568-13');
+	</script>
+</body>
+
+
+</html>
