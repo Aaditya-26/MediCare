@@ -139,24 +139,24 @@ STATICFILES_DIRS = [
 # SSLCOMMERZ env variables
 # VARIABLE should be in capital letter.
 
-STORE_ID = "medic65f9b3ecd9a9c"
-STORE_PASSWORD = "medic65f9b3ecd9a9c@ssl"
+STORE_ID = "#"
+STORE_PASSWORD = "#"
 STORE_NAME = "MediCare"
 
 # Mailtrap env Variables
 
 SMTP_HOST = 'smtp.gmail.com'
 SMTP_PORT = '587'
-SMTP_USER = 'heartsx12@gmail.com'
-SMTP_PASSWORD = 'jocv sahl xumt gtrh'
+SMTP_USER = '#'
+SMTP_PASSWORD = '#'
 
 # EMAIL
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'heartsx12@gmail.com'
-EMAIL_HOST_PASSWORD = 'jocv sahl xumt gtrh'
+EMAIL_HOST_USER = '#'
+EMAIL_HOST_PASSWORD = '#'
 EMAIL_USE_TLS = True
 
 # Default primary key field type
