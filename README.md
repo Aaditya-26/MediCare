@@ -4,25 +4,25 @@ MediCare is a web-based healthcare platform that aims to provide a centralized s
 
 ## Screenshots
 Home Page
-![Screenshot 2023-11-24 200118](https://github.com/Heartsx12/JobFinder/assets/120915164/103ee706-782d-44e4-a769-af9b55c00ab7)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/21c51444-b183-434c-8951-b85308d1c9e2)
 Login Page (Patient)
-![Screenshot 2023-11-24 200138](https://github.com/Heartsx12/JobFinder/assets/120915164/6be19d37-dd50-49f9-9926-8782bf1e9b03)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/a10f66ff-22c7-46d5-ab60-ba49502a453e)
 Registration Page (Doctor)
-![Screenshot 2023-11-24 200213](https://github.com/Heartsx12/JobFinder/assets/120915164/b31ea8f9-422f-4282-a856-ed8aa68b649c)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/172f62d9-fce1-4127-b8bb-dcef3120591a)
 Hospital Administrator Login Page
-![Screenshot 2023-11-24 200224](https://github.com/Heartsx12/JobFinder/assets/120915164/e27a070a-b139-4eae-b2a0-dcd2437f4ada)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/a4abefa6-a4d0-4f2a-8f9d-dc09d6c8cd4e)
 Hospital Administrator Registration Page
-![Screenshot 2023-11-24 200636](https://github.com/Heartsx12/JobFinder/assets/120915164/d0d294ad-2b1d-4eb6-8f3e-347a47362dbb)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/988b3b2f-3d78-4469-8c1c-fcc05cc4aa6e)
 Dashboard Page (Patient)
-![Screenshot 2023-11-24 200648](https://github.com/Heartsx12/JobFinder/assets/120915164/29c43313-347a-4ead-8d47-1a3900efabd5)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/a4e3bccb-b06a-48c4-bbfd-29987ef3b597)
 Medical Shop Page
-![Screenshot 2023-11-24 200734](https://github.com/Heartsx12/JobFinder/assets/120915164/0f92111a-79c6-4936-8e8f-064e167d6ebf)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/c96136f6-3399-4654-b0cb-49b0be406a2f)
 Profile Page (Doctor)
-![Screenshot 2023-11-24 200745](https://github.com/Heartsx12/JobFinder/assets/120915164/88a45c23-56fa-4a23-af4c-e86b30cde950)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/e7cdaaba-191b-458b-9d64-bc43ecd5e0c5)
 Chat Page (Doctor)
-![Screenshot 2023-11-24 212725](https://github.com/Heartsx12/JobFinder/assets/120915164/7f0693a5-6d09-40cd-a0cc-38c3e13f47ab)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/4a8210c5-c060-4e71-bdca-89f45bebd9fc)
 Hospital Administrator Dashboard Page
-![Screenshot 2023-11-24 212747](https://github.com/Heartsx12/JobFinder/assets/120915164/45edaa8d-22fe-4da4-ab80-508f809c5b03)
+![image](https://github.com/Aaditya-26/MediCare/assets/120915164/1b5aaca0-17ee-415b-9eeb-ef2462ba1294)
 
 ## Local Environment Setup
 #### Create a virtual environment:
@@ -49,6 +49,7 @@ python manage.py collectstatic
 ```
 #### Create Initial Database:
 ```bash
+python manage.py makemigrations
 python manage.py migrate
 ```
 #### Run Server:
@@ -57,7 +58,7 @@ python manage.py runserver
 ```
 #### Default Django Admin Credentials:
 ```bash
-Email: MediCare
+Username: MediCare
 Password: MediCare
 ```
 ## Support the Project
