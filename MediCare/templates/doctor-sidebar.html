@@ -1,0 +1,80 @@
+{% load static %}
+
+<div class="profile-sidebar">
+  <div class="widget-profile pro-widget-content">
+    <div class="profile-info-widget">
+      <a href="#" class="booking-doc-img">
+        <img src="{{ doctor.featured_image.url }}" alt="User Image" />
+      </a>
+      <div class="profile-det-info">
+        <h3>{{ doctor.name }}</h3>
+
+        <div class="patient-details">
+          <h5 class="mb-0">{{doctor.specialization.specialization_name}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-widget">
+    <nav class="dashboard-menu sidebar">
+      <ul>
+        <li>
+          <a href="{% url 'doctor-dashboard' %}">
+            <i class="fas fa-columns"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'doctor-profile' pk=doctor.doctor_id %}">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'appointments'%}">
+            <i class="fas fa-user-circle"></i>
+            <span>Appointment</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'multiple-hospital' %}">
+            <i class="fas fa-hospital"></i>
+            <span>Multiple Hospital</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'my-patients' %}">
+            <i class="fas fa-user-injured"></i>
+            <span>My Patients</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'doctor-test-list'%}">
+            <i class="fas fa-hourglass-start"></i>
+            <span>Test Information</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'doctor-profile-settings' %}">
+            <i class="fas fa-user-cog"></i>
+            <span>Profile Settings</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'doctor-change-password' pk=user.id%}">
+            <i class="fas fa-lock"></i>
+            <span>Change Password</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'doctor-logout'%}">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -111,9 +111,12 @@ def doctor_login(request):
         username = request.POST['username']
         password = request.POST['password']
         try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, 'Username does not exist')  
+            User.objects.get(username=username)
+        except User.DoesNotExist:
+            messages.error(request, 'Username does not exist')
+            # Fix: was missing return — fell through to authenticate() causing
+            # UnboundLocalError crash when user doesn't exist (same bug as login_user)
+            return render(request, 'doctor-login.html')
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
@@ -122,9 +125,9 @@ def doctor_login(request):
                 return redirect('doctor-dashboard')
             else:
                 messages.error(request, 'Invalid credentials. Not a Doctor')
-                return redirect('doctor-logout')   
+                return redirect('doctor-logout')
         else:
-            messages.error(request, 'Invalid username or password')  
+            messages.error(request, 'Invalid username or password')
     return render(request, 'doctor-login.html')
 
 @csrf_exempt

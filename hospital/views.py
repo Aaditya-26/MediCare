@@ -75,25 +75,48 @@ def resetPassword(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user_email = user.email
+            email = form.cleaned_data['email']
+            # Fix 1: was using form.save(commit=False) which creates a NEW unsaved
+            # User object — it never looked up the EXISTING user by email.
+            # user.pk was None so the reset token was generated for a phantom object
+            # and the link in the email would always fail.
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                # Don't reveal whether the email exists — silently redirect
+                return redirect('password_reset_done')
+
             subject = "Password Reset Requested"
+            # Fix 2: domain was hardcoded as '127.0.0.1:8000' — broken in production.
+            # Now reads from the request so it works on any host.
+            domain = request.get_host()
+            protocol = 'https' if request.is_secure() else 'http'
             values = {
-				"email":user.email,
-				'domain':'127.0.0.1:8000',
-				'site_name': 'Website',
-				"uid": urlsafe_base64_encode(force_bytes(user.pk)),
-				"user": user,
-				'token': default_token_generator.make_token(user),
-				'protocol': 'http',
-			}
+                "email": user.email,
+                'domain': domain,
+                'site_name': 'MediCare',
+                "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                "user": user,
+                'token': default_token_generator.make_token(user),
+                'protocol': protocol,
+            }
             html_message = render_to_string('mail_template.html', {'values': values})
             plain_message = strip_tags(html_message)
             try:
-                send_mail(subject, plain_message, 'admin@example.com',  [user.email], html_message=html_message, fail_silently=False)
+                # Fix 3: sender was hardcoded as 'admin@example.com' — rejected by
+                # all mail servers. Now uses DEFAULT_FROM_EMAIL from settings.
+                from django.conf import settings as django_settings
+                send_mail(
+                    subject,
+                    plain_message,
+                    django_settings.DEFAULT_FROM_EMAIL,
+                    [user.email],
+                    html_message=html_message,
+                    fail_silently=False,
+                )
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
-            return redirect ("password_reset_done")
+            return redirect('password_reset_done')
     context = {'form': form}
     return render(request, 'reset_password.html', context)
     
@@ -133,14 +156,17 @@ def login_user(request):
         username = request.POST['username']
         password = request.POST['password']
         try:
-            user = User.objects.get(username=username)
-        except:
+            User.objects.get(username=username)
+        except User.DoesNotExist:
             messages.error(request, 'Username does not exist')
+            # Fix: was missing return — fell through to authenticate() on a
+            # non-existent user, causing an UnboundLocalError crash.
+            return render(request, 'patient-login.html')
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            if request.user.is_patient:   
-                messages.success(request, 'User Logged in Successfully')    
+            if request.user.is_patient:
+                messages.success(request, 'User Logged in Successfully')
                 return redirect('patient-dashboard')
             else:
                 messages.error(request, 'Invalid credentials. Not a Patient')
