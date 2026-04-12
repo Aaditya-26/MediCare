@@ -109,11 +109,14 @@ USE_TZ = True
 
 # ── Static & Media ─────────────────────────────────────────────────────
 STATIC_URL = 'static/'
-# Fix: STATIC_ROOT was missing entirely — collectstatic would fail with no destination
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# Fix: whitenoise storage for efficient static file serving
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# In DEBUG: use simple storage (avoids .map file errors from third-party JS)
+# In production: use WhiteNoise compressed storage for efficiency
+if DEBUG:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')

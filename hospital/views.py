@@ -1,5 +1,3 @@
-import email
-from multiprocessing import context
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import CustomUserCreationForm, PatientForm, PasswordResetForm
@@ -23,7 +21,6 @@ from sslcommerz.models import Payment
 from django.db.models import Q, Count
 import re
 from io import BytesIO
-from urllib import response
 from django.core.mail import BadHeaderError, send_mail
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator

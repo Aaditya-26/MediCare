@@ -1,7 +1,3 @@
-import email
-from email.mime import image
-from multiprocessing import context
-from unicodedata import name
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required

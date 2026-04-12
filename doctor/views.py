@@ -1,7 +1,3 @@
-import email
-from email import message
-from multiprocessing import context
-from turtle import title
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from hospital_admin.views import prescription_list
@@ -28,7 +24,6 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse
 from django.utils.html import strip_tags
 from io import BytesIO
-from urllib import response
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.http import HttpResponse
