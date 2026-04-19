@@ -118,7 +118,11 @@ if DEBUG:
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-MEDIA_URL = '/images/'
+# Media files are stored inside the static directory so WhiteNoise can serve
+# them in production (Render) without a separate media server.
+# MEDIA_URL must match STATIC_URL prefix so collectstatic puts them where
+# WhiteNoise already serves: /static/images/...
+MEDIA_URL = '/static/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 # ── SSLCommerz ─────────────────────────────────────────────────────────
