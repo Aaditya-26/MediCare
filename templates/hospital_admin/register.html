@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,14 +11,35 @@
 	<link rel="shortcut icon" type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}">
 
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/bootstrap.min.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/bootstrap.min.css' %}">
 
 	<!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/font-awesome.min.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/font-awesome.min.css' %}">
 
 	<!-- Main CSS -->
-	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/style.css'%}">
+	<link rel="stylesheet" href="{% static 'HealthStack-System/css/admin/style.css' %}">
 
+	<style>
+		.errorlist {
+			list-style: none;
+			padding: 0;
+			margin: 4px 0 0 0;
+		}
+
+		.errorlist li {
+			font-size: 12px;
+			color: #dc3545;
+		}
+
+		.errorlist li::before {
+			content: "\f06a  ";
+			font-family: "FontAwesome";
+		}
+
+		.field-error .form-control {
+			border-color: #dc3545;
+		}
+	</style>
 </head>
 
 <body>
@@ -34,26 +55,44 @@
 					<div class="login-right">
 						<div class="login-right-wrap">
 							<h1>Register</h1>
-							<p class="account-subtitle">Access to our dashboard</p>
+							<p class="account-subtitle">Create your admin account</p>
+
+							<!-- Messages -->
+							{% if messages %}
+							{% for message in messages %}
+							<div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+								role="alert">
+								{{ message }}
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							{% endfor %}
+							{% endif %}
 
 							<!-- Form -->
-							<form action="{%url 'admin_register'%}" method="POST">
-								{% csrf_token %} {% for field in form %}
-								<div class="form-group">
+							<form action="{% url 'admin_register' %}" method="POST">
+								{% csrf_token %}
+								{% for field in form %}
+								<div class="form-group {% if field.errors %}field-error{% endif %}">
 									<label class="focus-label">{{ field.label }}</label>
-									{{field}}
+									{{ field }}
+									{% if field.errors %}
+									{{ field.errors }}
+									{% endif %}
 								</div>
 								{% endfor %}
 								<div class="form-group mb-0">
 									<button class="btn btn-primary btn-block" type="submit">Register</button>
 								</div>
-							</form><br>
+							</form>
 							<!-- /Form -->
 
-							<!-- Social Login -->
-							<div class="social-login"><span>Return to <a href="{% url 'hospital_home'%}">Homepage</a></span> </div>
-							<!-- /Social Login -->
-							<div class="text-center fe fe-user-plus">Already have an account? <a href="{% url 'admin_login' %}">Login</a></div>
+							<div class="social-login mt-3">
+								<span>Return to <a href="{% url 'hospital_home' %}">Homepage</a></span>
+							</div>
+							<div class="text-center mt-2">Already have an account? <a
+									href="{% url 'admin_login' %}">Login</a></div>
 						</div>
 					</div>
 				</div>

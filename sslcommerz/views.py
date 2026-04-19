@@ -128,7 +128,15 @@ def ssl_payment_request(request, pk, id):
     response = sslcz.createSession(post_body)  # API response
     print(response)
 
-    return redirect(response['GatewayPageURL'])
+    gateway_url = response.get('GatewayPageURL', '')
+    if response.get('status') == 'SUCCESS' and gateway_url:
+        return HttpResponseRedirect(gateway_url)
+
+    # API call failed - roll back payment record and show error
+    payment.delete()
+    from django.contrib import messages as _msg
+    _msg.error(request, 'Payment gateway error: ' + response.get('failedreason', 'Could not initiate payment. Please check your SSLCommerz credentials.'))
+    return redirect('patient-dashboard')
 
 @csrf_exempt
 def ssl_payment_request_medicine(request, pk, id):
@@ -139,7 +147,7 @@ def ssl_payment_request_medicine(request, pk, id):
     invoice_number = generate_random_invoice()
     post_body = {}
     post_body['total_amount'] = order.final_bill()
-    post_body['currency'] = "₹"
+    post_body['currency'] = "INR"
     post_body['tran_id'] = generate_random_string()
     post_body['success_url'] = request.build_absolute_uri(
         reverse('ssl-payment-success'))
@@ -182,7 +190,15 @@ def ssl_payment_request_medicine(request, pk, id):
     response = sslcz.createSession(post_body)  # API response
     print(response)
 
-    return redirect(response['GatewayPageURL'])
+    gateway_url = response.get('GatewayPageURL', '')
+    if response.get('status') == 'SUCCESS' and gateway_url:
+        return HttpResponseRedirect(gateway_url)
+
+    # API call failed - roll back payment record and show error
+    payment.delete()
+    from django.contrib import messages as _msg
+    _msg.error(request, 'Payment gateway error: ' + response.get('failedreason', 'Could not initiate payment. Please check your SSLCommerz credentials.'))
+    return redirect('patient-dashboard')
 
 @csrf_exempt
 def ssl_payment_request_test(request, pk, id, pk2):
@@ -195,7 +211,7 @@ def ssl_payment_request_test(request, pk, id, pk2):
     
     post_body = {}
     post_body['total_amount'] = test_order.final_bill()
-    post_body['currency'] = "₹"
+    post_body['currency'] = "INR"
     post_body['tran_id'] = generate_random_string()
 
     post_body['success_url'] = request.build_absolute_uri(
@@ -238,7 +254,16 @@ def ssl_payment_request_test(request, pk, id, pk2):
     payment.save()
     response = sslcz.createSession(post_body)  # API response
     print(response)
-    return redirect(response['GatewayPageURL'])    
+
+    gateway_url = response.get('GatewayPageURL', '')
+    if response.get('status') == 'SUCCESS' and gateway_url:
+        return HttpResponseRedirect(gateway_url)
+
+    # API call failed - roll back payment record and show error
+    payment.delete()
+    from django.contrib import messages as _msg
+    _msg.error(request, 'Payment gateway error: ' + response.get('failedreason', 'Could not initiate payment. Please check your SSLCommerz credentials.'))
+    return redirect('patient-dashboard')
 
 @csrf_exempt
 def ssl_payment_success(request):
@@ -445,7 +470,7 @@ def ssl_payment_success(request):
             Cart.objects.all().delete()
             return redirect('patient-dashboard')
     elif status == 'FAILED':
-        redirect('ssl-payment-fail')
+        return redirect('ssl-payment-fail')
 
 
 @csrf_exempt

@@ -6,11 +6,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.cache import cache_control
+from django.views.decorators.csrf import csrf_exempt
 from hospital.models import User, Patient
-from hospital_admin.models import Admin_Information,Clinical_Laboratory_Technician
-from .models import Doctor_Information, Appointment, Education, Experience, Prescription_medicine, Report,Specimen,Test, Prescription_test, Prescription, Doctor_review
-from hospital_admin.models import Admin_Information,Clinical_Laboratory_Technician, Test_Information
-from .models import Doctor_Information, Appointment, Education, Experience, Prescription_medicine, Report,Specimen,Test, Prescription_test, Prescription
+from hospital_admin.models import Admin_Information, Clinical_Laboratory_Technician, Test_Information
+from .models import Doctor_Information, Appointment, Education, Experience, Prescription_medicine, Report, Specimen, Test, Prescription_test, Prescription, Doctor_review
 from django.db.models import Q, Count
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
@@ -20,16 +19,11 @@ from datetime import datetime, timedelta
 import datetime
 import re
 from django.core.mail import BadHeaderError, send_mail
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 from django.http import HttpResponse
 from django.utils.html import strip_tags
 from io import BytesIO
-from django.shortcuts import render
-from django.template.loader import get_template
-from django.http import HttpResponse
 from xhtml2pdf import pisa
-from .models import Report
-from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -75,11 +69,11 @@ def patient_id(request):
 def logoutDoctor(request):
     user = User.objects.get(id=request.user.id)
     if user.is_doctor:
-        user.login_status == "offline"
+        user.login_status = False
         user.save()
         logout(request)
     messages.success(request, 'User Logged out')
-    return render(request,'doctor-login.html')
+    return redirect('doctor-login')
 
 @csrf_exempt
 def doctor_register(request):
@@ -326,7 +320,7 @@ def doctor_profile_settings(request):
             messages.success(request, 'Profile Updated')
             return redirect('doctor-dashboard')
     else:
-        redirect('doctor-logout')
+        return redirect('doctor-logout')
                
 @csrf_exempt    
 @login_required(login_url="doctor-login")      
@@ -387,7 +381,7 @@ def my_patients(request):
         doctor = Doctor_Information.objects.get(user=request.user)
         appointments = Appointment.objects.filter(doctor=doctor).filter(appointment_status='confirmed')
     else:
-        redirect('doctor-logout')
+        return redirect('doctor-logout')
     context = {'doctor': doctor, 'appointments': appointments}
     return render(request, 'my-patients.html', context)
 
@@ -401,7 +395,7 @@ def patient_profile(request, pk):
         prescription = Prescription.objects.filter(doctor=doctor).filter(patient=patient)
         report = Report.objects.filter(doctor=doctor).filter(patient=patient) 
     else:
-        redirect('doctor-logout')
+        return redirect('doctor-logout')
     context = {'doctor': doctor, 'appointments': appointments, 'patient': patient, 'prescription': prescription, 'report': report}  
     return render(request, 'patient-profile.html', context)
 

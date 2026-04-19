@@ -4,8 +4,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from hospital import views
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
 
 admin.site.site_header = "MediCare"
+
+class AdminSite(admin.AdminSite):
+    def login(self, request, extra_context=None):
+        if request.user.is_authenticated and not request.user.is_staff:
+            return redirect('admin_login')
+        return super().login(request, extra_context)
+
+admin.site.__class__ = AdminSite
 
 urlpatterns = [
     path('admin/', admin.site.urls),

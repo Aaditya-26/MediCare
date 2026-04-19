@@ -247,7 +247,7 @@ def profile_settings(request):
             messages.success(request, 'Profile Settings Changed!')
             return redirect('patient-dashboard')
     else:
-        redirect('logout')  
+        return redirect('logout')  
         
 @csrf_exempt
 @login_required(login_url="login")
@@ -413,7 +413,7 @@ def view_report(request,pk):
         context = {'patient':patient,'report':report,'test':test,'specimen':specimen}
         return render(request, 'view-report.html',context)
     else:
-        redirect('logout') 
+        return redirect('logout') 
 
 def test_cart(request):
     return render(request, 'test-cart.html')
@@ -519,7 +519,7 @@ def prescription_view(request,pk):
         context = {'patient':patient,'prescription':prescription,'prescription_test':prescription_test,'prescription_medicine':prescription_medicine}
         return render(request, 'prescription-view.html',context)
       else:
-         redirect('logout') 
+         return redirect('logout') 
 
 @csrf_exempt
 def render_to_pdf(template_src, context_dict={}):
@@ -573,14 +573,5 @@ def delete_report(request,pk):
         messages.error(request, 'Not Authorized')
         return render(request, 'patient-login.html')
 
-@csrf_exempt
-@receiver(user_logged_in)
-def got_online(sender, user, request, **kwargs):    
-    user.login_status = True
-    user.save()
-
-@csrf_exempt
-@receiver(user_logged_out)
-def got_offline(sender, user, request, **kwargs):   
-    user.login_status = False
-    user.save()
+# NOTE: user_logged_in / user_logged_out signal handlers are defined in doctor/views.py
+# Duplicate handlers have been removed from here to prevent double-firing.

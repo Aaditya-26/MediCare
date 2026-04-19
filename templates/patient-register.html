@@ -1,114 +1,193 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
-    <title>MediCare</title>
 
-    <!-- Favicons -->
-    <link type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+  <title>MediCare</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}" />
+  <!-- Favicons -->
+  <link type="image/x-icon" href="{% static 'HealthStack-System/images/Normal/favicon.png' %}" rel="icon" />
 
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/bootstrap.min.css' %}" />
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}" />
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/fontawesome.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'HealthStack-System/plugins/Normal/fontawesome/css/all.min.css' %}" />
 
-  </head>
-  <body class="account-page">
-    <!-- Main Wrapper -->
-    <div class="main-wrapper">
-      <!-- Header -->
-      <header class="header">{% include 'navbar_home.html' %}</header>
-      <!-- /Header -->
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'HealthStack-System/css/Normal/style.css' %}" />
 
-      <!-- Page Content -->
-      <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-8 offset-md-2">
-              <!-- Register Content -->
-              <div class="account-content">
-                <div class="row align-items-center justify-content-center">
-                  <div class="col-md-7 col-lg-6 login-left">
-                    <img src="{% static 'HealthStack-System/images/Normal/login-banner.png' %}" class="img-fluid" alt="Doccure Register" />
+  <style>
+    /* Allow form-focus containers to grow when errors are present */
+    .form-focus {
+      height: auto !important;
+      min-height: 50px;
+    }
+
+    /* Keep the actual input at the correct height */
+    .form-focus .form-control {
+      height: 50px;
+    }
+
+    /* Remove default bullet/padding from Django errorlist */
+    .form-focus .errorlist {
+      list-style: none;
+      padding: 0;
+      margin: 5px 0 0 0;
+    }
+
+    /* Style each error message */
+    .form-focus .errorlist li {
+      font-size: 12px;
+      color: #dc3545;
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      padding: 2px 0;
+      line-height: 1.4;
+    }
+
+    /* Red exclamation icon before each error */
+    .form-focus .errorlist li::before {
+      content: "\f06a";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Red border on input when there are errors */
+    .form-focus.field-has-error .form-control {
+      border-color: #dc3545;
+    }
+
+    /* Keep the floating label raised and red when field has errors */
+    .form-focus.field-has-error .focus-label {
+      top: -18px;
+      font-size: 12px;
+      opacity: 1;
+      color: #dc3545;
+    }
+
+    /* Consistent bottom margin between fields */
+    .form-group.form-focus {
+      margin-bottom: 22px;
+    }
+
+    /* Proper spacing for the links row below fields */
+    .register-links {
+      margin-top: 4px;
+      margin-bottom: 18px;
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body class="account-page">
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+
+    <!-- Header -->
+    <header class="header">{% include 'navbar_home.html' %}</header>
+    <!-- /Header -->
+
+    <!-- Page Content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <!-- Register Content -->
+            <div class="account-content">
+              <div class="row align-items-center justify-content-center">
+                <div class="col-md-7 col-lg-6 login-left">
+                  <img src="{% static 'HealthStack-System/images/Normal/login-banner.png' %}" class="img-fluid"
+                    alt="MediCare Register" />
+                </div>
+                <div class="col-md-12 col-lg-6 login-right">
+                  <div class="login-header">
+                    <h3>Patient Register
+                      <a href="{% url 'doctor-register' %}">Are you a Doctor?</a>
+                    </h3>
                   </div>
-                  <div class="col-md-12 col-lg-6 login-right">
-                    <div class="login-header">
-                      <h3>Patient Register
-                        <a href="{% url 'doctor-register' %}">Are you a Doctor?</a>
-                      </h3>
+
+                  {% include 'message.html' %}
+
+                  <!-- Register Form -->
+                  <form action="{% url 'patient-register' %}" method="POST" novalidate>
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="form-group form-focus{% if field.errors %} field-has-error focused{% endif %}">
+                      {{ field }}
+                      {{ field.errors }}
+                      <label class="focus-label">{{ field.label }}</label>
+                    </div>
+                    {% endfor %}
+
+                    <div class="register-links">
+                      <a class="forgot-link" href="{% url 'login' %}">Already have an account?</a>
                     </div>
 
-                    <!-- Register Form -->
-                    <form action="{% url 'patient-register' %}" method="POST">
-                      {% csrf_token %} 
+                    <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Sign Up</button>
 
-                      {% include 'message.html' %}
-                      
-                      {% for field in form %}
-                      <div class="form-group form-focus">
-                        {{field}} {{ field.errors }}
-                        <label class="focus-label">{{ field.label }}</label>
-                      </div>
-                      {% endfor %}
-
-                      <div class="text-right">
-                        <a class="forgot-link" href="{% url 'login'%}">Already have an account?</a>
-                      </div>
-                      <button class="btn btn-primary btn-block btn-lg login-btn" type="submit">SignUp</button>
-                      <!-- <div class="login-or">
-                        <span class="or-line"></span>
-                        <span class="span-or">or</span>
-                      </div>
-                      <div class="row form-row social-login">
-                        <div class="col-6">
-                          <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Login</a>
-                        </div>
-                        <div class="col-6">
-                          <a href="#" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</a>
-                        </div>
-                      </div> -->
-                    </form>
-                    <!-- /Register Form -->
-                  </div>
+                  </form>
+                  <!-- /Register Form -->
                 </div>
               </div>
-              <!-- /Register Content -->
             </div>
+            <!-- /Register Content -->
           </div>
         </div>
       </div>
-      <!-- /Page Content -->
-
-     <!-- Footer -->
-     {% include 'footer.html' %}
-     <!-- /Footer -->
     </div>
-    <!-- /Main Wrapper -->
+    <!-- /Page Content -->
 
-    <!-- jQuery -->
-    <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
+    <!-- Footer -->
+    {% include 'footer.html' %}
+    <!-- /Footer -->
 
-    <!-- Bootstrap Core JS -->
-    <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
-    <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
+  </div>
+  <!-- /Main Wrapper -->
 
-    <!-- Custom JS -->
-    <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+  <!-- jQuery -->
+  <script src="{% static 'HealthStack-System/js/Normal/jquery.min.js' %}"></script>
 
-    {% if messages %}
-    <script>
-            $(document).ready(function () {
-                $('.toast').toast('show');
-            });
-    </script>
-  {% endif %}
+  <!-- Bootstrap Core JS -->
+  <script src="{% static 'HealthStack-System/js/Normal/popper.min.js' %}"></script>
+  <script src="{% static 'HealthStack-System/js/Normal/bootstrap.min.js' %}"></script>
 
-  </body>
+  <!-- Custom JS -->
+  <script src="{% static 'HealthStack-System/Outside_assets/js/script.js' %}"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Keep floating label raised for fields that have a value after a failed submit
+      $('.form-focus .form-control').each(function () {
+        if ($(this).val()) {
+          $(this).closest('.form-focus').addClass('focused');
+        }
+      });
+
+      // Float label up on focus, drop back on blur if empty
+      $('.form-focus .form-control')
+        .on('focus', function () {
+          $(this).closest('.form-focus').addClass('focused');
+        })
+        .on('blur', function () {
+          if (!$(this).val()) {
+            $(this).closest('.form-focus').removeClass('focused');
+          }
+        });
+
+      // Show any toast notifications (no-op if none exist)
+      $('.toast').toast('show');
+    });
+  </script>
+
+</body>
+
 </html>

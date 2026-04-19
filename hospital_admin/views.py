@@ -32,7 +32,16 @@ from .utils import searchMedicines
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def admin_dashboard(request):
     if request.user.is_hospital_admin:
-        user = Admin_Information.objects.get(user=request.user)
+        try:
+            user = Admin_Information.objects.get(user=request.user)
+        except Admin_Information.DoesNotExist:
+            messages.error(
+                request,
+                'No Admin profile found for this account. '
+                'Please ask a superuser to create an Admin_Information record for your user.'
+            )
+            logout(request)
+            return redirect('admin_login')
         total_patient_count = Patient.objects.annotate(count=Count('patient_id'))
         total_doctor_count = Doctor_Information.objects.annotate(count=Count('doctor_id'))
         total_pharmacist_count = Pharmacist.objects.annotate(count=Count('pharmacist_id'))
@@ -84,6 +93,13 @@ def admin_dashboard(request):
         return render(request, 'hospital_admin/admin-dashboard.html', context)
     elif request.user.is_labworker:
         return redirect('labworker-dashboard')
+    elif request.user.is_pharmacist:
+        return redirect('pharmacist-dashboard')
+    else:
+        # Logged-in user has no admin/labworker/pharmacist role — send them away
+        messages.error(request, 'You are not authorized to access the admin panel.')
+        logout(request)
+        return redirect('admin_login')
 
 @csrf_exempt
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -102,8 +118,9 @@ def admin_login(request):
         password = request.POST['password']
         try:
             user = User.objects.get(username=username)
-        except:
+        except User.DoesNotExist:
             messages.error(request, 'Username does not exist')
+            return render(request, 'hospital_admin/login.html')
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
