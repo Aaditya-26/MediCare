@@ -1,65 +1,165 @@
 # MediCare
 
-MediCare is a web-based healthcare platform that aims to provide a centralized system for managing healthcare services across multiple hospitals. The platform has different modules for different types of users, such as patients, doctors, hospital administrators, lab workers, and pharmacists. The platform allows users to perform various tasks related to their healthcare needs, such as accessing information, booking appointments, purchasing medicines, paying for tests, and communicating with each other. The platform also allows users to access and share their health records with other authorized users, such as doctors or pharmacists. This way, the platform helps users to manage their healthcare needs more easily and conveniently, while also reducing the workload and costs for healthcare providers.
+MediCare is a web-based healthcare platform providing a centralized system for managing healthcare services across multiple hospitals. It supports patients, doctors, hospital administrators, lab workers, and pharmacists — covering appointment booking, medicine purchase, test payments, prescriptions, health records, and real-time chat.
+
+---
 
 ## Screenshots
-Home Page
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/21c51444-b183-434c-8951-b85308d1c9e2)
-Login Page (Patient)
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/a10f66ff-22c7-46d5-ab60-ba49502a453e)
-Registration Page (Doctor)
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/172f62d9-fce1-4127-b8bb-dcef3120591a)
-Hospital Administrator Login Page
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/a4abefa6-a4d0-4f2a-8f9d-dc09d6c8cd4e)
-Hospital Administrator Registration Page
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/988b3b2f-3d78-4469-8c1c-fcc05cc4aa6e)
-Dashboard Page (Patient)
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/a4e3bccb-b06a-48c4-bbfd-29987ef3b597)
-Medical Shop Page
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/c96136f6-3399-4654-b0cb-49b0be406a2f)
-Profile Page (Doctor)
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/e7cdaaba-191b-458b-9d64-bc43ecd5e0c5)
-Chat Page (Doctor)
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/4a8210c5-c060-4e71-bdca-89f45bebd9fc)
-Hospital Administrator Dashboard Page
-![image](https://github.com/Aaditya-26/MediCare/assets/120915164/1b5aaca0-17ee-415b-9eeb-ef2462ba1294)
 
-## Local Environment Setup
-#### Create a virtual environment:
+| | |
+|---|---|
+| **Home Page** | **Patient Login** |
+| ![Home](https://github.com/Aaditya-26/MediCare/assets/120915164/21c51444-b183-434c-8951-b85308d1c9e2) | ![Patient Login](https://github.com/Aaditya-26/MediCare/assets/120915164/a10f66ff-22c7-46d5-ab60-ba49502a453e) |
+| **Doctor Registration** | **Admin Login** |
+| ![Doctor Register](https://github.com/Aaditya-26/MediCare/assets/120915164/172f62d9-fce1-4127-b8bb-dcef3120591a) | ![Admin Login](https://github.com/Aaditya-26/MediCare/assets/120915164/a4abefa6-a4d0-4f2a-8f9d-dc09d6c8cd4e) |
+| **Patient Dashboard** | **Medical Shop** |
+| ![Patient Dashboard](https://github.com/Aaditya-26/MediCare/assets/120915164/a4e3bccb-b06a-48c4-bbfd-29987ef3b597) | ![Medical Shop](https://github.com/Aaditya-26/MediCare/assets/120915164/c96136f6-3399-4654-b0cb-49b0be406a2f) |
+| **Doctor Profile** | **Admin Dashboard** |
+| ![Doctor Profile](https://github.com/Aaditya-26/MediCare/assets/120915164/e7cdaaba-191b-458b-9d64-bc43ecd5e0c5) | ![Admin Dashboard](https://github.com/Aaditya-26/MediCare/assets/120915164/1b5aaca0-17ee-415b-9eeb-ef2462ba1294) |
+
+---
+
+## Local Development Setup
+
+### 1. Clone the repository
+
 ```bash
-# Using virtualenv
-virtualenv virtualenv
-
-# Using Python 3.8
-python3.8 -m venv virtualenv
+git clone https://github.com/Aaditya-26/MediCare.git
+cd MediCare
 ```
-#### Activate the virtual environment:
-```bash 
+
+### 2. Create and activate a virtual environment
+
+```bash
+# Create
+python -m venv virtualenv
+
+# Activate (Windows)
+virtualenv\Scripts\activate
+
+# Activate (macOS/Linux)
 source virtualenv/bin/activate
 ```
-#### Clone the repository and install the required packages:
+
+### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
-## Running the Project
-#### Collect Static (Optional)
+
+### 4. Configure environment variables
+
 ```bash
-Note: Only necessary when debug is False (in production mode).
-python manage.py collectstatic
+# Copy the example file
+cp .env.example .env
 ```
-#### Create Initial Database:
+
+Then open `.env` and fill in your values:
+
+```env
+SECRET_KEY=your-random-secret-key-here
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Email (use console backend for local dev — no real emails sent)
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your@gmail.com
+EMAIL_HOST_PASSWORD=your-app-password
+
+# SSLCommerz (leave blank to skip payment gateway locally)
+SSLCOMMERZ_STORE_ID=
+SSLCOMMERZ_STORE_PASSWORD=
+```
+
+> 💡 Generate a secure `SECRET_KEY` with:
+>
+> ```bash
+> python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+> ```
+
+### 5. Set up the database
+
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
-#### Run Server:
+
+### 6. Create a superuser (optional)
+
+```bash
+python manage.py createsuperuser
+```
+
+### 7. Run the development server
+
 ```bash
 python manage.py runserver
 ```
-#### Default Django Admin Credentials:
-```bash
-Username: MediCare
-Password: MediCare
+
+Visit **<http://127.0.0.1:8000>**
+
+---
+
+## Deploying to Render
+
+The project includes a `render.yaml` for one-click deployment. Follow these steps:
+
+### Step 1 — Push your code to GitHub
+
+Make sure your repo is pushed and `.env` is **not** committed (it's in `.gitignore`).
+
+### Step 2 — Create a new Render project
+
+1. Go to [render.com](https://render.com) and sign in
+2. Click **New → Blueprint**
+3. Connect your GitHub repository
+4. Render will detect `render.yaml` and auto-configure a **Web Service** + **PostgreSQL database**
+5. Click **Apply**
+
+### Step 3 — Set environment variables on Render
+
+In your Render web service → **Environment** tab, add the following:
+
+| Key | Value |
+|-----|-------|
+| `SECRET_KEY` | A long random string (auto-generated by Render via `render.yaml`) |
+| `DEBUG` | `False` |
+| `ALLOWED_HOSTS` | `your-app-name.onrender.com` |
+| `DATABASE_URL` | Auto-set by Render from the linked PostgreSQL database |
+| `EMAIL_BACKEND` | `django.core.mail.backends.smtp.EmailBackend` |
+| `EMAIL_HOST` | `smtp.gmail.com` |
+| `EMAIL_PORT` | `587` |
+| `EMAIL_USE_TLS` | `True` |
+| `EMAIL_HOST_USER` | `your@gmail.com` |
+| `EMAIL_HOST_PASSWORD` | Your Gmail App Password ([how to get one](https://support.google.com/accounts/answer/185833)) |
+| `DEFAULT_FROM_EMAIL` | `your@gmail.com` |
+| `SSLCOMMERZ_STORE_ID` | Your SSLCommerz store ID |
+| `SSLCOMMERZ_STORE_PASSWORD` | Your SSLCommerz store password |
+
+### Step 4 — Deploy
+
+Render automatically runs on every push to your main branch:
+
 ```
-## Support the Project
+pip install -r requirements.txt
+python manage.py collectstatic --no-input
+python manage.py migrate
+gunicorn healthstack.wsgi:application
+```
+
+### Step 5 — Create a superuser on Render
+
+Open the **Shell** tab in your Render web service and run:
+
+```bash
+python manage.py createsuperuser
+```
+
+---
+
+## ⭐ Support the Project
+
 If you find this project useful, show your support by starring it! 🌟
