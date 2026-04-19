@@ -34,7 +34,7 @@ pyHanko>=0.21.0
 PyPDF3>=1.0.6
 lxml>=5.1.0
 arabic-reshaper>=3.0.0
-python-bidi>=0.4.2
+python-bidi==0.4.2
 svglib>=1.5.1
 
 # Payment
