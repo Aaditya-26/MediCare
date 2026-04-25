@@ -118,8 +118,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # on third-party JS/CSS files with broken source map or font references
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # ── Cloudinary (production media storage) ─────────────────────────────
 if not DEBUG:
