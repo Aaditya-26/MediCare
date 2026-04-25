@@ -2,7 +2,7 @@
 
 MediCare is a web-based healthcare platform providing a centralized system for managing healthcare services across multiple hospitals. It supports patients, doctors, hospital administrators, lab workers, and pharmacists — covering appointment booking, medicine purchase, test payments, prescriptions, health records, and real-time chat.
 
-🌐 **Live Demo:** [https://medicare-a9bx.onrender.com](https://medicare-a9bx.onrender.com)
+**Live Demo:** [https://medicare-a9bx.onrender.com](https://medicare-a9bx.onrender.com)
 
 ---
 
@@ -81,7 +81,7 @@ CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
 ```
 
-> 💡 Generate a secure `SECRET_KEY` with:
+> Generate a secure `SECRET_KEY` with:
 >
 > ```bash
 > python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
@@ -149,7 +149,7 @@ In your Render web service → **Environment** tab, add the following:
 | `CLOUDINARY_API_KEY` | Your Cloudinary API key |
 | `CLOUDINARY_API_SECRET` | Your Cloudinary API secret |
 
-> 💡 Get your Cloudinary credentials from [cloudinary.com](https://cloudinary.com) → Dashboard → API Keys.
+> Get your Cloudinary credentials from [cloudinary.com](https://cloudinary.com) → Dashboard → API Keys.
 > Media files (doctor photos, hospital images, etc.) are stored on Cloudinary in production so they persist across Render deploys.
 
 ### Step 4 — Deploy
