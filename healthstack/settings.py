@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'hospital.apps.HospitalConfig',
     'hospital_admin.apps.HospitalAdminConfig',
     'doctor.apps.DoctorConfig',
@@ -111,19 +113,23 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# In DEBUG: use simple storage (avoids .map file errors from third-party JS)
-# In production: use WhiteNoise compressed storage for efficiency
+
 if DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-# Media files are stored inside the static directory so WhiteNoise can serve
-# them in production (Render) without a separate media server.
-# MEDIA_URL must match STATIC_URL prefix so collectstatic puts them where
-# WhiteNoise already serves: /static/images/...
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# ── Cloudinary (production media storage) ─────────────────────────────
+if not DEBUG:
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY':    env('CLOUDINARY_API_KEY'),
+        'API_SECRET': env('CLOUDINARY_API_SECRET'),
+    }
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # ── SSLCommerz ─────────────────────────────────────────────────────────
 # Fix: credentials were hardcoded as "#" — now read from environment
