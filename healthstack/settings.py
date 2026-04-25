@@ -162,3 +162,7 @@ if not DEBUG:
     X_FRAME_OPTIONS = 'DENY'
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+# ── WhiteNoise ─────────────────────────────────────────────────────────
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['map']
+WHITENOISE_AUTOREFRESH = True
