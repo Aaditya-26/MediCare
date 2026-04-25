@@ -164,5 +164,10 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
 
 # ── WhiteNoise ─────────────────────────────────────────────────────────
-WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['map']
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = [
+    'jpg', 'jpeg', 'png', 'gif', 'webp', 'svg',  # images
+    'woff', 'woff2', 'ttf', 'eot',               # fonts
+    'map',                                         # source maps
+    'gz', 'br',                                    # already compressed
+]
 WHITENOISE_AUTOREFRESH = True
