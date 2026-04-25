@@ -5,6 +5,8 @@ from django.conf.urls.static import static
 from hospital import views
 from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
+from whitenoise.middleware import WhiteNoiseMiddleware
+
 
 admin.site.site_header = "MediCare"
 
@@ -34,8 +36,9 @@ urlpatterns = [
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="reset_password_complete.html"), name="password_reset_complete"),
 ]
 
+# Serve media files in both dev and production
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    # Note: do NOT manually serve STATIC_URL — runserver + STATICFILES_DIRS handles it

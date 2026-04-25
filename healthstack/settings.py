@@ -114,12 +114,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Use plain WhiteNoise storage — no compression step, avoids FileNotFoundError
-# on third-party JS/CSS files with broken source map or font references
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
-MEDIA_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 # ── Cloudinary (production media storage) ─────────────────────────────
 if not DEBUG:
