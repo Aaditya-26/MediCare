@@ -2,7 +2,7 @@ services:
   - type: web
     name: medicare
     env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --noinput"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input --clear && python manage.py migrate --noinput"
     startCommand: "gunicorn healthstack.wsgi:application --bind 0.0.0.0:$PORT --workers 2"
     envVars:
       - key: SECRET_KEY
