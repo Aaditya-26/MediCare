@@ -8,13 +8,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(
     DEBUG=(bool, False),
 )
+# Gracefully skip if .env doesn't exist (e.g. on Render where env vars are set directly)
 env_file = os.path.join(BASE_DIR, '.env')
 if os.path.exists(env_file):
     environ.Env.read_env(env_file)
 
 # ── Security ──────────────────────────────────────────────────────────
+# Fix: was hardcoded plaintext secret key in source code
 SECRET_KEY = env('SECRET_KEY', default='change-me-in-production')
+
+# Fix: was hardcoded True — always exposes errors and debug info in production
 DEBUG = env('DEBUG', default=False)
+
+# Fix: was hardcoded local IPs only — breaks on any other machine/server
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'])
 
 # ── Installed Apps ─────────────────────────────────────────────────────
@@ -37,12 +43,14 @@ INSTALLED_APPS = [
     'ChatApp.apps.ChatappConfig',
 ]
 
+# Only enable debug toolbar locally — do not load it in production
 if DEBUG:
     INSTALLED_APPS += ['debug_toolbar']
 
 # ── Middleware ─────────────────────────────────────────────────────────
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # Fix: whitenoise was in requirements but never added to middleware
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,7 +114,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Plain WhiteNoise storage — no compression step, avoids FileNotFoundError
+# Use plain WhiteNoise storage — no compression step, avoids FileNotFoundError
 # on third-party JS/CSS files with broken source map or font references
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
@@ -123,11 +131,13 @@ if not DEBUG:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # ── SSLCommerz ─────────────────────────────────────────────────────────
+# Fix: credentials were hardcoded as "#" — now read from environment
 STORE_ID = env('SSLCOMMERZ_STORE_ID', default='')
 STORE_PASSWORD = env('SSLCOMMERZ_STORE_PASSWORD', default='')
 STORE_NAME = 'MediCare'
 
 # ── Email ──────────────────────────────────────────────────────────────
+# Fix: credentials were hardcoded as "#" — now read from environment
 EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = env.int('EMAIL_PORT', default=587)
@@ -140,6 +150,7 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default=EMAIL_HOST_USER or 'norep
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'hospital.User'
 
+# SESSION: 45 minutes
 SESSION_COOKIE_AGE = 45 * 60
 SESSION_SAVE_EVERY_REQUEST = True
 
