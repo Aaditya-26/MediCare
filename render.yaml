@@ -2,7 +2,7 @@ services:
   - type: web
     name: medicare
     env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate --noinput"
     startCommand: "gunicorn healthstack.wsgi:application --bind 0.0.0.0:$PORT --workers 2"
     envVars:
       - key: SECRET_KEY
@@ -16,7 +16,29 @@ services:
           name: medicare-db
           property: connectionString
       - key: EMAIL_BACKEND
-        value: django.core.mail.backends.console.EmailBackend
+        value: django.core.mail.backends.smtp.EmailBackend
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_USE_TLS
+        value: "True"
+      - key: EMAIL_HOST_USER
+        sync: false        # set manually in Render dashboard
+      - key: EMAIL_HOST_PASSWORD
+        sync: false        # set manually in Render dashboard
+      - key: DEFAULT_FROM_EMAIL
+        sync: false        # set manually in Render dashboard
+      - key: SSLCOMMERZ_STORE_ID
+        sync: false        # set manually in Render dashboard
+      - key: SSLCOMMERZ_STORE_PASSWORD
+        sync: false        # set manually in Render dashboard
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false        # set manually in Render dashboard
+      - key: CLOUDINARY_API_KEY
+        sync: false        # set manually in Render dashboard
+      - key: CLOUDINARY_API_SECRET
+        sync: false        # set manually in Render dashboard
 
 databases:
   - name: medicare-db
