@@ -162,7 +162,7 @@ if not DEBUG:
     X_FRAME_OPTIONS = 'DENY'
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-
+    
 # ── WhiteNoise ─────────────────────────────────────────────────────────
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = [
     'jpg', 'jpeg', 'png', 'gif', 'webp', 'svg',  # images
@@ -170,4 +170,6 @@ WHITENOISE_SKIP_COMPRESS_EXTENSIONS = [
     'map',                                         # source maps
     'gz', 'br',                                    # already compressed
 ]
-WHITENOISE_AUTOREFRESH = True
+
+if DEBUG:
+    WHITENOISE_AUTOREFRESH = True  # dev only — skips caching for static files
