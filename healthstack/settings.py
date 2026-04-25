@@ -108,7 +108,7 @@ USE_I18N = True
 USE_TZ = True
 
 # ── Static & Media ─────────────────────────────────────────────────────
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # In DEBUG: use simple storage (avoids .map file errors from third-party JS)
@@ -122,7 +122,7 @@ else:
 # them in production (Render) without a separate media server.
 # MEDIA_URL must match STATIC_URL prefix so collectstatic puts them where
 # WhiteNoise already serves: /static/images/...
-MEDIA_URL = '/static/images/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 # ── SSLCommerz ─────────────────────────────────────────────────────────
