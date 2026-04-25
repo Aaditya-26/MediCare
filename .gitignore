@@ -10,7 +10,8 @@ __pycache__/
 *.log
 db.sqlite3
 media/
-# staticfiles/     ← comment this line out
+
+# staticfiles/     ← REMOVE THIS LINE
 
 # Environment
 .env
