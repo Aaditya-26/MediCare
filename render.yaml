@@ -11,36 +11,9 @@ services:
         value: "False"
       - key: ALLOWED_HOSTS
         value: ".onrender.com"
-      - key: DATABASE_URL
-        fromDatabase:
-          name: medicare-db
-          property: connectionString
-      - key: EMAIL_BACKEND
-        value: django.core.mail.backends.smtp.EmailBackend
-      - key: EMAIL_HOST
-        value: smtp.gmail.com
-      - key: EMAIL_PORT
-        value: "587"
-      - key: EMAIL_USE_TLS
-        value: "True"
-      - key: EMAIL_HOST_USER
-        sync: false        # set manually in Render dashboard
-      - key: EMAIL_HOST_PASSWORD
-        sync: false        # set manually in Render dashboard
-      - key: DEFAULT_FROM_EMAIL
-        sync: false        # set manually in Render dashboard
-      - key: SSLCOMMERZ_STORE_ID
-        sync: false        # set manually in Render dashboard
-      - key: SSLCOMMERZ_STORE_PASSWORD
-        sync: false        # set manually in Render dashboard
       - key: CLOUDINARY_CLOUD_NAME
-        sync: false        # set manually in Render dashboard
+        sync: false
       - key: CLOUDINARY_API_KEY
-        sync: false        # set manually in Render dashboard
+        sync: false
       - key: CLOUDINARY_API_SECRET
-        sync: false        # set manually in Render dashboard
-
-databases:
-  - name: medicare-db
-    databaseName: medicare
-    user: medicare
+        sync: false
