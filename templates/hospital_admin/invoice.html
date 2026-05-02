@@ -33,10 +33,10 @@
 			
 				<!-- Logo -->
                 <div class="header-left">
-                    <a href="index.html" class="logo">
+                    <a href="{% url 'admin-dashboard' %}" class="logo">
 						<img src="assets/img/logo.png" alt="Logo">
 					</a>
-					<a href="index.html" class="logo logo-small">
+					<a href="{% url 'admin-dashboard' %}" class="logo logo-small">
 						<img src="assets/img/logo-small.png" alt="Logo" width="30" height="30">
 					</a>
                 </div>
@@ -170,7 +170,7 @@
 								<span>Main</span>
 							</li>
 							<li> 
-								<a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
+								<a href="{% url 'admin-dashboard' %}"><i class="fe fe-home"></i> <span>Dashboard</span></a>
 							</li>
 							<li> 
 								<a href="appointment-list.html"><i class="fe fe-layout"></i> <span>Appointments</span></a>
